@@ -1,4 +1,7 @@
+#Implemented OOPs concept for architecture of single layer perceptron
+
 import numpy as np
+import matplotlib.pyplot as plt
 
 X = np.array([[0,0],[0,1],[1,0],[1,1]])
 y = np.array([0,0,0,1])
@@ -33,3 +36,32 @@ perceptron.fit(X, y)
 
 print("Weights:", perceptron.w)
 print("Bias:", perceptron.b)  
+
+# Decision Bundary plotting
+
+plt.figure(figsize=(6, 6))
+for i in range(len(X)):
+    if y[i] == 0:
+        plt.scatter(X[i][0], X[i][1], color="red", s=100, label="Class 0" if i == 0 else "")
+    else:
+        plt.scatter(X[i][0], X[i][1], color="green", s=100, label="Class 1" if i == 3 else "")
+
+w = perceptron.w
+b = perceptron.b
+
+x_vals = np.array([-0.5, 1.5])
+
+if w[1] != 0:
+    y_vals = -(w[0] * x_vals + b) / w[1]
+    plt.plot(x_vals, y_vals, "b-", label="Decision Boundary")
+else:
+    plt.axvline(x=-b / w[0], color="blue", label="Decision Boundary")
+
+plt.xlim(-0.5, 1.5)
+plt.ylim(-0.5, 1.5)
+plt.xlabel("x1")
+plt.ylabel("x2")
+plt.title("Perceptron Decision Boundary")
+plt.grid(True)
+plt.legend()
+plt.show()

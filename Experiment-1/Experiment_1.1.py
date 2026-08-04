@@ -1,3 +1,5 @@
+#Implemented concept for architecture of single layer perceptron
+
 import numpy as np
 import matplotlib.pyplot as plt
 
