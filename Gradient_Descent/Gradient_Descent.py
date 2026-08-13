@@ -15,7 +15,7 @@ for epoch in range(epochs):
 
     y_pred = m * x + c
 
-    loss = np.mean((y_pred - y)**2)
+    loss = np.mean(np.square(y_pred - y))
 
     error = y_pred - y
     dm = 2 * np.mean(error * x)
