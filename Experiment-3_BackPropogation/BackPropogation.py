@@ -2,12 +2,13 @@
 
 from sklearn import datasets
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 iris = datasets.load_iris()
 
 x = iris.data
-y = (iris.target == 0).astype(float)
+y = iris.target
 
 def sigmoid(a):
     return 1 / (1 + np.exp(-a))
@@ -23,28 +24,30 @@ w2 = np.random.rand(2, 1)
 lr = 0.01
 epochs = 3000
 
+error_history = []
+
 for epoch in range(epochs):
 
     total_error = 0
 
     for i in range(len(x)):
-
+        # for inputs to hidden layer
         h1 = np.dot(x[i], w1)
         a1 = sigmoid(h1)
-
+        # for hidden layer to output
         h2 = np.dot(a1, w2)
         a2 = sigmoid(h2)
 
         y_pred = a2[0]
         error = y_pred - y[i]
-        total_error += error ** 2
-
+        total_error += np.square(error)
+        
         dE_da2 = 2 * (a2 - y[i])
-
+        
         da2_dh2 = sigmoid_derivative(a2)
-
+         
         dE_dh2 = dE_da2 * da2_dh2
-
+         
         dw2 = np.outer(a1, dE_dh2)
 
         dE_da1 = dE_dh2 * w2.T
@@ -60,9 +63,19 @@ for epoch in range(epochs):
 
         w1 = w1 - lr * dw1
 
+    error_history.append(total_error)
+
 
 print("\nFinal W1:")
 print(w1)
 
 print("\nFinal W2:")
 print(w2)
+
+plt.figure(figsize=(8, 5))
+plt.plot(range(epochs), error_history, color='blue', linewidth=1)
+plt.title("Training Error vs Epochs")
+plt.xlabel("Epoch")
+plt.ylabel("Total Squared Error")
+plt.grid(True)
+plt.show()
