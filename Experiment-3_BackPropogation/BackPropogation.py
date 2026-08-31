@@ -43,13 +43,13 @@ for epoch in range(epochs):
         total_error += np.square(error)
         
         dE_da2 = 2 * (a2 - y[i])
-        
+       
         da2_dh2 = sigmoid_derivative(a2)
-         
+         # it will tell us that how much does error change if the h2 changes 
         dE_dh2 = dE_da2 * da2_dh2
-         
+    # it will tell us that how much each weight is wrong 
         dw2 = np.outer(a1, dE_dh2)
-
+        # which hidn lyer was involved more
         dE_da1 = dE_dh2 * w2.T
 
         da1_dh1 = sigmoid_derivative(a1)
