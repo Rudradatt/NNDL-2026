@@ -36,8 +36,8 @@ for epoch in range(epochs):
 
         a1 = sigmoid(h1)
 
-        # Calculate derivative once
-        da1_dh1 = a1 * (1 - a1)
+        
+        da1_dh1 = a1 * (1 - a1)  # Calculate derivative once
 
 
   
@@ -55,26 +55,26 @@ for epoch in range(epochs):
         total_error += np.square(error)
 
 
-        # Error with respect to output
-        dE_da2 = 2 * (a2 - y[i])
+       
+        dE_da2 = 2 * (a2 - y[i])   # Error with respect to output
 
-        # Error with respect to h2
-        dE_dh2 = dE_da2 * da2_dh2
-
-
-        # Gradient of w2
-        dw2 = np.outer(a1, dE_dh2)
+        
+        dE_dh2 = dE_da2 * da2_dh2  # Error with respect to h2
 
 
-        # Error propagated to hidden layer
-        dE_da1 = dE_dh2 * w2.T
-
-        # Error with respect to h1
-        dE_dh1 = dE_da1 * da1_dh1
+        
+        dw2 = np.outer(a1, dE_dh2)  # Gradient of w2
 
 
-        # Gradient of w1
-        dw1 = np.outer(x[i], dE_dh1)
+        
+        dE_da1 = dE_dh2 * w2.T  # Error propagated to hidden layer
+
+       
+        dE_dh1 = dE_da1 * da1_dh1   # Error with respect to h1
+
+
+       
+        dw1 = np.outer(x[i], dE_dh1)   # Gradient of w1
 
 
 
@@ -82,14 +82,9 @@ for epoch in range(epochs):
 
         w1 = w1 - lr * dw1
 
-
-    # Store error
     error_history.append(total_error)
 
 
-# -------------------------
-# Final Weights
-# -------------------------
 
 print("\nFinal W1:")
 print(w1)
@@ -98,19 +93,11 @@ print("\nFinal W2:")
 print(w2)
 
 
-# -------------------------
-# Prediction
-# -------------------------
-
-print("\n-------------------------")
 print("Predictions")
-print("-------------------------")
 
 correct = 0
 
 for i in range(len(x)):
-
-    # Forward Pass
 
     h1 = np.dot(x[i], w1)
 
@@ -123,7 +110,6 @@ for i in range(len(x)):
     y_pred = a2[0]
 
 
-    # Convert probability to class
 
     if y_pred >= 0.5:
         predicted_class = 1
@@ -131,14 +117,9 @@ for i in range(len(x)):
         predicted_class = 0
 
 
-    # Actual and predicted names
-
     actual_name = "Setosa" if y[i] == 1 else "Not Setosa"
 
     predicted_name = "Setosa" if predicted_class == 1 else "Not Setosa"
-
-
-    # Print prediction
 
     print(
         "Actual:",
@@ -149,22 +130,13 @@ for i in range(len(x)):
         round(y_pred, 4)
     )
 
-
-    # Check prediction
-
     if predicted_class == y[i]:
         correct += 1
 
 
-# -------------------------
-# Calculate Accuracy
-# -------------------------
-
 accuracy = (correct / len(x)) * 100
 
-print("\n-------------------------")
 print("Accuracy")
-print("-------------------------")
 
 print("Correct Predictions:", correct)
 

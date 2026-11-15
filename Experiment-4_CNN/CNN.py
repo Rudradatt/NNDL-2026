@@ -1,4 +1,3 @@
-# Network:  image(28x28) -> Conv(4 filters, 3x3) -> ReLU -> MaxPool(2x2) -> Flatten -> Dense(10) -> Softmax
 import numpy as np
 np.random.seed(0)
 
